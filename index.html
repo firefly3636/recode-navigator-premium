@@ -527,115 +527,15 @@
                 min-height: 48px;
             }
         }
-        /* === パスワードロック画面 === */
-        .lock-overlay {
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 50%, var(--primary-light) 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-            padding: 1.5rem;
-        }
-
-        .lock-overlay.hidden {
-            display: none;
-        }
-
-        .lock-box {
-            background: var(--bg-card);
-            border-radius: 16px;
-            padding: 2.5rem 2rem;
-            max-width: 400px;
-            width: 100%;
-            box-shadow: 0 16px 48px rgba(0,0,0,0.25);
-            text-align: center;
-        }
-
-        .lock-box .lock-icon {
-            font-size: 3rem;
-            margin-bottom: 0.8rem;
-        }
-
-        .lock-box h2 {
-            color: var(--primary);
-            font-size: 1.3rem;
-            margin-bottom: 0.4rem;
-        }
-
-        .lock-box p {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .lock-input {
-            width: 100%;
-            padding: 0.9rem 1rem;
-            border: 2px solid #e8e4dc;
-            border-radius: 10px;
-            font-family: inherit;
-            font-size: 1.1rem;
-            text-align: center;
-            letter-spacing: 0.15em;
-            margin-bottom: 1rem;
-        }
-
-        .lock-input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(26, 95, 74, 0.15);
-        }
-
-        .lock-btn {
-            width: 100%;
-            padding: 0.9rem;
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-family: inherit;
-            font-size: 1.05rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .lock-btn:hover {
-            background: var(--primary-light);
-        }
-
-        .lock-error {
-            color: #c0392b;
-            font-size: 0.9rem;
-            margin-top: 0.8rem;
-            min-height: 1.3em;
-        }
+        /* === ロック画面削除済み === */
 
         .app-wrapper {
-            display: none;
-        }
-
-        .app-wrapper.unlocked {
             display: block;
         }
     </style>
 </head>
 <body>
-    <!-- パスワードロック画面 -->
-    <div class="lock-overlay" id="lockOverlay">
-        <div class="lock-box">
-            <div class="lock-icon">&#128274;</div>
-            <h2>リコード法ナビゲーター</h2>
-            <p>このアプリは認証が必要です。<br>パスワードを入力してください。</p>
-            <input type="password" class="lock-input" id="lockInput" placeholder="パスワード" autocomplete="off">
-            <button class="lock-btn" id="lockBtn">ログイン</button>
-            <div class="lock-error" id="lockError"></div>
-        </div>
-    </div>
-
-    <!-- アプリ本体（認証後に表示） -->
+    <!-- アプリ本体 -->
     <div class="app-wrapper" id="appWrapper">
     <header class="app-header">
         <h1>リコード法ナビゲーター</h1>
@@ -1040,46 +940,7 @@
     <script>
     (function() {
         'use strict';
-        // ===== パスワード認証 =====
-        // ★ パスワードを変更したい場合は下の値を書き換えてください ★
-        var APP_PASSWORD = '2026';
-
-        var overlay  = document.getElementById('lockOverlay');
-        var wrapper  = document.getElementById('appWrapper');
-        var input    = document.getElementById('lockInput');
-        var btn      = document.getElementById('lockBtn');
-        var errMsg   = document.getElementById('lockError');
-
-        // セッション中はログイン状態を保持
-        if (sessionStorage.getItem('recode_unlocked') === 'yes') {
-            unlock();
-        }
-
-        function unlock() {
-            overlay.classList.add('hidden');
-            wrapper.classList.add('unlocked');
-            sessionStorage.setItem('recode_unlocked', 'yes');
-        }
-
-        function tryLogin() {
-            var val = input.value.trim();
-            if (!val) { errMsg.textContent = 'パスワードを入力してください'; return; }
-            if (val === APP_PASSWORD) {
-                errMsg.textContent = '';
-                unlock();
-            } else {
-                errMsg.textContent = 'パスワードが違います。もう一度お試しください。';
-                input.value = '';
-                input.focus();
-            }
-        }
-
-        btn.addEventListener('click', tryLogin);
-        input.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') tryLogin();
-        });
-        // ページ表示時にフォーカス
-        input.focus();
+        // パスワード認証を削除済み - 直接アプリを表示
     })();
     </script>
 </body>
